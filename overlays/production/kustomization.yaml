@@ -8,7 +8,7 @@ kind: Kustomization
 # (...//base?ref=<sha>). Asi, un cambio posterior en base/ llega a staging
 # pero no a production hasta el siguiente tag.
 resources:
-- https://github.com/Andres02Otero/kubernetes-devops-project-config//base?ref=9d3422f0f12056e9b65de04a0afdb7f5b3b87a47
+- https://github.com/Andres02Otero/kubernetes-devops-project-config//base?ref=a43c8930409c9ea45e8c4049cf0a123d68d7fab4
 - todo-app-image-pv.yaml
 - backup-cronjob.yaml
 - generic-receiver.yaml
@@ -23,13 +23,13 @@ patches:
 images:
 - name: andres09otero/todo-app
   newName: andres09otero/todo-app
-  newTag: "5.1"
+  newTag: "5.2"
 - name: andres09otero/todo-backend
   newName: andres09otero/todo-backend
-  newTag: "5.1"
+  newTag: "5.2"
 - name: andres09otero/todo-broadcaster
   newName: andres09otero/todo-broadcaster
-  newTag: "5.1"
+  newTag: "5.2"
 - name: andres09otero/todo-random-article
   newName: andres09otero/todo-random-article
-  newTag: "5.1"
+  newTag: "5.2"
