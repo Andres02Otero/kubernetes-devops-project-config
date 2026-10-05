@@ -1,0 +1,18 @@
+apiVersion: v1
+
+kind: PersistentVolumeClaim
+
+metadata:
+  name: todo-app-image-pvc
+
+spec:
+  # Disco dinamico de k3d por defecto (staging). Production lo cambia al PV
+  # local de siempre en overlays/production/todo-app-image-pvc.yaml.
+  storageClassName: local-path
+
+  accessModes:
+    - ReadWriteOnce
+
+  resources:
+    requests:
+      storage: 100Mi

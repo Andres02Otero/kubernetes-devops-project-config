@@ -1,0 +1,8 @@
+# Production conserva el PV local de siempre (todo-app-image-pv.yaml, en
+# esta carpeta) en vez del disco dinamico de la base.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: todo-app-image-pvc
+spec:
+  storageClassName: todo-app-image-storage

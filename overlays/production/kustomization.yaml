@@ -1,0 +1,35 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Entorno production. Solo cambia cuando se publica un tag en el repo de
+# codigo: su workflow release-production.yaml construye las imagenes con el
+# nombre del tag, las fija aqui y reemplaza la primera linea de resources
+# (la base) por la base de ESTE repo fijada al commit de ese momento
+# (...//base?ref=<sha>). Asi, un cambio posterior en base/ llega a staging
+# pero no a production hasta el siguiente tag.
+resources:
+- ../../base
+- todo-app-image-pv.yaml
+- backup-cronjob.yaml
+- generic-receiver.yaml
+
+# El namespace de siempre del proyecto: production conserva sus datos.
+namespace: project
+
+patches:
+- path: broadcaster-forward.yaml
+- path: todo-app-image-pvc.yaml
+
+images:
+- name: andres09otero/todo-app
+  newName: andres09otero/todo-app
+  newTag: "4.9"
+- name: andres09otero/todo-backend
+  newName: andres09otero/todo-backend
+  newTag: "4.9"
+- name: andres09otero/todo-broadcaster
+  newName: andres09otero/todo-broadcaster
+  newTag: "4.9"
+- name: andres09otero/todo-random-article
+  newName: andres09otero/todo-random-article
+  newTag: "4.9"

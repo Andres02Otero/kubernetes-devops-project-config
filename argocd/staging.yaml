@@ -1,0 +1,27 @@
+# Application de ArgoCD del entorno staging. Se aplica una vez:
+#   kubectl apply -n argocd -f argocd/staging.yaml
+apiVersion: argoproj.io/v1alpha1
+
+kind: Application
+
+metadata:
+  name: project-staging
+  namespace: argocd
+
+spec:
+  project: default
+
+  source:
+    # Desde el ejercicio 4.10 ArgoCD lee solo este repo de configuracion.
+    repoURL: https://github.com/Andres02Otero/kubernetes-devops-project-config
+    path: overlays/staging
+    targetRevision: main
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: project-staging
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

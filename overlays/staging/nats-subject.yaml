@@ -1,0 +1,28 @@
+# Staging comparte el servidor NATS con production: con su propio subject,
+# sus broadcasters (que solo registran en el log) no se quedan con mensajes
+# de production. Mismo cambio para el que publica y el que escucha.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-backend
+spec:
+  template:
+    spec:
+      containers:
+        - name: todo-backend
+          env:
+            - name: NATS_SUBJECT
+              value: "staging.todos.status"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broadcaster
+spec:
+  template:
+    spec:
+      containers:
+        - name: broadcaster
+          env:
+            - name: NATS_SUBJECT
+              value: "staging.todos.status"

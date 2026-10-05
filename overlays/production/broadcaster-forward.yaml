@@ -1,0 +1,15 @@
+# Solo production reenvia los mensajes al servicio externo (opcion Generic
+# del ejercicio 4.6): aqui al receptor simulado de generic-receiver.yaml;
+# para un servicio real basta cambiar la URL.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broadcaster
+spec:
+  template:
+    spec:
+      containers:
+        - name: broadcaster
+          env:
+            - name: BROADCAST_URL
+              value: "http://generic-receiver-svc/"

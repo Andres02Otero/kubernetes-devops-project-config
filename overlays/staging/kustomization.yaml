@@ -1,0 +1,33 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Entorno staging: la base tal como esta en main de este repo, en su propio
+# namespace. Lo que el enunciado (4.9) pide distinto ya viene resuelto en la
+# base: el broadcaster solo registra los mensajes en el log y no hay backup
+# (eso solo lo agrega production). El workflow main.yaml del repo de codigo
+# reescribe "images" con el SHA de cada commit de main que cambia codigo.
+resources:
+- ../../base
+
+# Reescribe el namespace de todo, incluido el objeto Namespace de la base.
+namespace: project-staging
+
+# Parches en archivos aparte: "kustomize edit" reformatea este archivo en
+# cada release y desordenaria parches escritos aqui mismo.
+patches:
+- path: nats-subject.yaml
+- path: ingress-host.yaml
+
+images:
+- name: andres09otero/todo-app
+  newName: andres09otero/todo-app
+  newTag: 3efa258b82afcb3d0211e5c5a738ef422217752f
+- name: andres09otero/todo-backend
+  newName: andres09otero/todo-backend
+  newTag: 3efa258b82afcb3d0211e5c5a738ef422217752f
+- name: andres09otero/todo-broadcaster
+  newName: andres09otero/todo-broadcaster
+  newTag: 3efa258b82afcb3d0211e5c5a738ef422217752f
+- name: andres09otero/todo-random-article
+  newName: andres09otero/todo-random-article
+  newTag: 3efa258b82afcb3d0211e5c5a738ef422217752f
